@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  app:
+    container_name: docker-logrotate-app
+    image: debian:bookworm-slim
+    command:
+      - sh
+      - -c
+      - |
+        while true; do
+          echo "[`date`] Hello!" >> /app/logs/greet.log
+          sleep 4
+        done
+    volumes:
+      - ./logs:/app/logs
+
+  logrotate:
+    container_name: docker-logrotate
+    build:
+      context: .
+      dockerfile: logrotate.Dockerfile
+    tty: true
+    volumes:
+      - ./logrotate/app:/etc/logrotate.d/app:ro
+      - ./logs:/app/logs
