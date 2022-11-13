@@ -89,8 +89,8 @@ $pm install -y logrotate
 # Required directives: copytruncate
 sudo sh -c 'cat << EOF > /etc/logrotate.d/docker
 /var/lib/docker/containers/*/*.log {
-  rotate 1
-  hourly
+  rotate 7
+  daily
   copytruncate
   missingok
   compress
