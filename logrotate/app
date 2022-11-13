@@ -1,5 +1,0 @@
-/app/logs/*.log {
-    size 5K
-    rotate 1
-    missingok
-}

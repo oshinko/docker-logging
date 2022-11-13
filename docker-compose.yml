@@ -3,24 +3,9 @@ version: '3.9'
 services:
   app:
     container_name: docker-logrotate-app
-    image: debian:bookworm-slim
-    command:
-      - sh
-      - -c
-      - |
-        while true; do
-          echo "[`date`] Hello!" >> /app/logs/greet.log
-          sleep 4
-        done
+    image: nginx:1.23.2-alpine
+    ports:
+      - '8000:80'
     volumes:
-      - ./logs:/app/logs
-
-  logrotate:
-    container_name: docker-logrotate
-    build:
-      context: .
-      dockerfile: logrotate.Dockerfile
-    tty: true
-    volumes:
-      - ./logrotate/app:/etc/logrotate.d/app:ro
-      - ./logs:/app/logs
+      - ./nginx-templates:/etc/nginx/templates
+      - ./src:/usr/share/nginx/html
