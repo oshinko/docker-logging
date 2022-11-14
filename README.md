@@ -56,8 +56,7 @@ sudo sh -c 'cat << EOF > /etc/docker/daemon.json
   }
 }
 EOF'
-sudo docker stop `sudo docker ps -q`
-sudo docker rm `sudo docker ps -a -q`
+a=`sudo docker ps -aq` && [ "$a" != "" ] && sudo docker rm -f $a
 sudo service docker restart
 ```
 
